@@ -1,0 +1,13 @@
+﻿body {
+}
+.bookRegister
+{
+    padding : 10% 0 0 30%;
+}
+.errorAlert {
+      font: bold;
+      color: red;
+}
+.auto-style1 {
+      width: 201px;
+}
