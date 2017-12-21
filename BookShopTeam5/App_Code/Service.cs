@@ -32,4 +32,16 @@ public class Service : IService
         return WCFBook.Make(b.BookID, b.Title, b.ISBN, b.Author, b.Stock, b.Price, categoryName);
     }
 
+    public WCFBook[] SearchBook(string title)
+    {
+        List<Book> bookList = Data.GetBooksByTitle(title);
+        WCFBook[] wcfBookList = new WCFBook[bookList.Count];
+        for (int i = 0; i < bookList.Count; i++)
+        {
+            Book b = bookList[i];
+            String categoryName = Data.GetCategory(b.CategoryID).CategoryName;
+            wcfBookList[i] = WCFBook.Make(b.BookID, b.Title, b.ISBN, b.Author, b.Stock, b.Price, categoryName);
+        }
+        return wcfBookList;
+    }
 }
