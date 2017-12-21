@@ -2,6 +2,7 @@ package com.bookstore.team5.bookstore;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Parcelable;
 import android.util.Log;
 
@@ -47,28 +48,42 @@ public class Book extends HashMap<String, String> {
     public static List<Book> testbook(){
         List<Book> list = new ArrayList<Book>();
         list.add(new Book(1111,"megan and me","fiction","A123456","Mr Awesome",12,"12.40"));
-        list.add(new Book(1112,"megan and you","fiction","A123457","Mr Awesome",11,"12.00"));
+        list.add(new Book(1112,"How I became a magical princess","self-improvement","A123457","Mr Awesome",11,"12.00"));
         list.add(new Book(1113,"megan the explorer","erotica","A123458","Mr Awesome",10,"11.40"));
         return list;
     }
 
 
     public static List<Book> jread(String queryUrl, boolean detailsQuery) {
-        List<Book> list = new ArrayList<Book>();
-        JSONArray a = JSONParser.getJSONArrayFromUrl(queryUrl);
-        try {
-            for (int i = 0; i < a.length(); i++) {
-                JSONObject b = a.getJSONObject(i);
-                if(detailsQuery == false) {
-                    list.add(new Book(b.getString("Title"), b.getString("Category"), b.getString("Author")));
-                }
-                else{
-                    list.add(new Book(b.getInt("BookId"), b.getString("Title"), b.getString("Category"), b.getString("Isbn"), b.getString("Author"), b.getInt("Stock"), b.getString("Price")));
+        final List<Book> list = new ArrayList<Book>();
+        final boolean queryMode = detailsQuery;
+
+        new AsyncTask<String, Void, JSONArray>(){
+
+            @Override
+            protected JSONArray doInBackground(String... url) {
+                JSONArray a = JSONParser.getJSONArrayFromUrl(url[0]);
+                return a;
+            }
+
+            @Override
+            protected void onPostExecute(JSONArray a){
+                try {
+                    for (int i = 0; i < a.length(); i++) {
+                        JSONObject b = a.getJSONObject(i);
+                        if(queryMode == false) {
+                            list.add(new Book(b.getString("Title"), b.getString("Category"), b.getString("Author")));
+                        }
+                        else{
+                            list.add(new Book(b.getInt("BookId"), b.getString("Title"), b.getString("Category"), b.getString("Isbn"), b.getString("Author"), b.getInt("Stock"), b.getString("Price")));
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.e("NewsItem", "JSONArray error");
                 }
             }
-        } catch (Exception e) {
-            Log.e("NewsItem", "JSONArray error");
-        }
+        }.execute(queryUrl);
+
         return (list);
     }
 
