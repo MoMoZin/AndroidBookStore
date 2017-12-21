@@ -45,4 +45,12 @@ public class Data
             return catgry;
         }
     }
+
+    public static List<Book> GetBooksByTitle(string title)
+    {
+        using (BookshopEntities context = new BookshopEntities())
+        {
+            return context.Books.Where(book => book.Title.Contains(title)).ToList<Book>();
+        }
+    }
 }

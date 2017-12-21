@@ -19,6 +19,10 @@ public interface IService
     [WebGet(UriTemplate = "/Book", ResponseFormat = WebMessageFormat.Json)]
     WCFBook[] ListBook();
 
+    [OperationContract]
+    [WebGet(UriTemplate = "/SearchBook/{title}", ResponseFormat = WebMessageFormat.Json)]
+    WCFBook[] SearchBook(string title);
+
     // TODO: Add your service operations here
 }
 [DataContract]
