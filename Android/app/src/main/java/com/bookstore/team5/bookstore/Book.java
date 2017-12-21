@@ -22,8 +22,8 @@ import java.util.List;
 
 public class Book extends HashMap<String, String> {
 
-    private static final List<Book> bookList = jread("http://172.17.249.125/BookShopTeam5/Service.svc/Book", true);
-    final static String imageUrl="";
+    private static final List<Book> bookList = jread("http://localhost/BookShopTeam5/Service.svc/Book", true);
+    final static String imageUrl="http://localhost/BookShopTeam5/images";
 
     public Book(Integer bookId, String title, String categoryName, String isbn, String author, Integer stock, String price) {
         put("bookId", bookId.toString());
