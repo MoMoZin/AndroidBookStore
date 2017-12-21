@@ -15,12 +15,12 @@ public class Data
         //
     }
 
-    public static List<string> ListBook()
+    public static List<Book> ListBook()
     {
         using (BookshopEntities b = new BookshopEntities())
         {
             Console.Write(b.Books.Select<Book, string>(isbn => isbn.ISBN).ToList<string>()[0]);
-            return b.Books.Select<Book, string>(isbn => isbn.ISBN).ToList<string>();
+            return b.Books.ToList<Book>();
         }
     }
     public static Book GetBookDetails(string id)

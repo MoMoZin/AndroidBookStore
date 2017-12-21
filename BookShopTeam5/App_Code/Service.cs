@@ -26,9 +26,18 @@ public class Service : IService
     //	}
     //	return composite;
     //}
-    public string[] ListBook()
+    public WCFBook[] ListBook()
     {
-        return Data.ListBook().ToArray<string>();
+        
+        List<Book> bookList = Data.ListBook();
+        WCFBook[] wcfBookList = new WCFBook[bookList.Count];
+        for (int i= 0; i< bookList.Count; i++)
+        {
+            Book b = bookList[i];
+            String categoryName = Data.GetCategory(b.CategoryID).CategoryName;
+            wcfBookList[i] = WCFBook.Make(b.BookID, b.Title, b.ISBN, b.Author, b.Stock, b.Price, categoryName);
+        }
+        return wcfBookList;
     }
 
     public WCFBook GetBook(string isbn)
