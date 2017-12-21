@@ -33,9 +33,9 @@ public class ListingFragment extends ListFragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.list, container, false);
         SimpleAdapter adapter = new SimpleAdapter(getActivity(),Book.testbook(),
-                android.R.layout.simple_list_item_2,
-                new String[]{"title","author"},
-                new int[]{android.R.id.text1, android.R.id.text2});
+                R.layout.row,
+                new String[]{"title","author","categoryName"},
+                new int[]{R.id.titleTV, R.id.authorIV,R.id.catTV});
 /*        SimpleAdapter adapter = new SimpleAdapter(getActivity(),Book.jread("",false),
                 android.R.layout.simple_list_item_2,
                 new String[]{"title","author"},
@@ -51,6 +51,4 @@ public class ListingFragment extends ListFragment {
         intent.putExtra("book", b);
         startActivity(intent);
     }
-
-
 }
